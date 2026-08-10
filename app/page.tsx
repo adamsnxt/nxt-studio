@@ -1,4 +1,4 @@
-import { Explorer, Hero } from "./src/components/Sections";
+import { Explorer, Hero } from "../src/components/Sections";
 import Image from "next/image";
 
 export default function Home() {

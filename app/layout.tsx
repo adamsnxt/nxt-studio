@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ScrollProvider } from "./src/providers/ScrollProvider";
-import { Navbar } from "./src/components/organism";
+import { ScrollProvider } from "../src/providers/ScrollProvider";
+import { Navbar } from "../src/components/organism";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,9 +23,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased scrollbar-none`}
+      className={`${geistSans.variable} ${geistMono.variable}  w-screen antialiased overflow-x-hidden scrollbar-none`}
     >
-      <body className="flex flex-col w-full relative">
+      <body className="flex w-full flex-col relative">
         <ScrollProvider>
           <Navbar />
           {children}

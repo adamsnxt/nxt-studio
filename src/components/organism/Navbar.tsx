@@ -1,8 +1,9 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOnScroll } from "../../providers/ScrollProvider";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { spring } from "../../utils";
+import { usePathname } from "next/navigation";
 
 const options = [
   { label: "Contacto", path: "" },
@@ -13,8 +14,14 @@ const options = [
 export const Navbar = () => {
   const { isNotTop, isBrowserActive } = useOnScroll();
   const [hovered, setHovered] = useState<number | null>(null);
+  const route = usePathname();
+
+  useEffect(() => {
+    console.log(route);
+  });
+  if (route.startsWith("/preview")) return;
   return (
-    <nav className="w-full sticky top-0 left-0 p-3 flex justify-center items-center z-50">
+    <nav className="w-full sticky top-0 left-0 p-3 flex justify-center items-center z-50 ">
       <motion.nav
         className="w-full h-20 bg-background/30 backdrop-blur-3xl flex justify-center items-center border border-foreground/20 rounded-4xl px-6"
         initial={false}

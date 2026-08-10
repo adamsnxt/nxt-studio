@@ -25,7 +25,7 @@ export const Explorer = () => {
   }, []);
   return (
     <section
-      className="sticky top-0 left-0 w-full h-dvh flex flex-col gap-3 p-3"
+      className="sticky top-0 left-0 w-full h-dvh flex flex-col gap-3 p-3 "
       id="explorer"
       ref={sectionRef}
     >

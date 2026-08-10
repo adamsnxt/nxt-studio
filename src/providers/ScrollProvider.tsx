@@ -36,7 +36,7 @@ export const ScrollProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <Scroll.Provider value={{ isNotTop, isBrowserActive, setIsBrowserActive }}>
-      <ReactLenis root> {children}</ReactLenis>
+      <ReactLenis root>{children}</ReactLenis>
     </Scroll.Provider>
   );
 };

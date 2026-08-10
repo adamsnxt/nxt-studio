@@ -36,6 +36,11 @@ const banners = [
     alt: "Chino",
     path: "",
   },
+  {
+    img: "/001/demo.png",
+    alt: "Chino",
+    path: "/preview/001",
+  },
 ];
 
 export const Hero = () => {
@@ -161,7 +166,8 @@ export const Hero = () => {
               <Image
                 src={banners[current].img}
                 alt={banners[current].alt}
-                fill
+                width={1920}
+                height={1080}
                 priority={current === 0}
                 sizes="(max-width: 1024px) 100vw, 1024px"
                 className={`object-cover rounded-4xl ${
