@@ -11,17 +11,17 @@ export default async function Preview({
   const { slug } = await params;
   console.log(slug);
 
-  const loader = templates[slug];
+  const template = templates[slug];
 
-  if (!loader) {
+  if (!template) {
     notFound();
   }
 
-  const { default: Landing } = await loader();
+  const { default: Landing } = await template.loader();
 
   return (
     <>
-      <Landing />
+      <Landing assetBasePath={template.assets} />
       <Link
         href={"/"}
         className="fixed bg-background/30 backdrop-blur border border-foreground/20 bottom-5 right-5 rounded-full flex justify-center items-center p-5 group hover:border-foreground transition-all duration-300 cursor-pointer opacity-50 hover:opacity-100 z-50"

@@ -5,6 +5,15 @@ import { motion } from "framer-motion";
 import { spring } from "../../utils";
 import Link from "next/link";
 import ReactLenis from "lenis/react";
+import Image from "next/image";
+
+const templates = [
+  {
+    img: "/001/demo.png",
+    alt: "Pagina de un producto",
+    path: "/preview/001",
+  },
+];
 
 export const Explorer = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -74,11 +83,20 @@ export const Explorer = () => {
           className={`w-full h-full  rounded-4xl scrollbar-none overflow-y-auto`}
         >
           <div className="w-full grid grid-cols-3 gap-3">
-            {Array.from({ length: 15 }).map((_, i) => (
-              <div
-                className="w-full bg-background/30 border border-foreground/20 rounded-3xl h-96"
+            {templates.map((template, i) => (
+              <Link
+                href={template.path}
+                className="w-full bg-background/30 border border-foreground/20 rounded-3xl flex justify-center items-center overflow-hidden"
                 key={i}
-              ></div>
+              >
+                <Image
+                  width={1920}
+                  height={1080}
+                  alt=""
+                  src={template.img}
+                  className="w-full object-cover"
+                />
+              </Link>
             ))}
           </div>
         </ReactLenis>

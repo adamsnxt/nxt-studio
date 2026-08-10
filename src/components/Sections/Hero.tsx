@@ -17,28 +17,8 @@ const categories = [
 
 const banners = [
   {
-    img: "/banners/demo.png",
-    alt: "Futuristic design",
-    path: "/hola",
-  },
-  {
-    img: "/banners/demo2.png",
-    alt: "Chino",
-    path: "",
-  },
-  {
-    img: "/banners/demo3.png",
-    alt: "Chino",
-    path: "",
-  },
-  {
-    img: "/banners/demo4.png",
-    alt: "Chino",
-    path: "",
-  },
-  {
     img: "/001/demo.png",
-    alt: "Chino",
+    alt: "Pagina de un producto",
     path: "/preview/001",
   },
 ];

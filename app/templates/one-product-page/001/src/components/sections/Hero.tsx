@@ -1,34 +1,19 @@
 import { FitText } from "../atoms/";
 import Image from "next/image";
 
-export const Hero = () => {
-  const isHub = process.env.NEXT_PUBLIC_ENV;
-  const hubDatails = [
-    "/001/detail2.png",
-    "/001/detail.png",
-    "/001/detail3.png",
-  ];
-  const details = ["/detail2.png", "/detail.png", "/detail3.png"];
-
-  const resolveDetails = () => (isHub ? hubDatails : details);
-
+export const Hero = ({ data }: { data: Hero }) => {
   return (
     <div className="w-full bg-orange-50 flex flex-col justify-start items-center p-10 pt-0 relative h-[calc(100vh-5rem)]">
-      <FitText className="text-black font-bold shrink-0">
-        PATEK PHILIPPE
-      </FitText>
+      <FitText className="text-black font-bold shrink-0">{data.title}</FitText>
       <div className="w-full h-full flex">
         <div className=" flex-1 text-black flex flex-col gap-3 justify-end">
-          <p className="max-w-96">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis,
-            sint ea repudiandae dolorum veritatis magni suscipit.
-          </p>
+          <p className="max-w-96">{data.cta.paragraph}</p>
           <button className="px-4 py-2 bg-black rounded-r-full text-white w-fit cursor-pointer">
-            Ver mas
+            {data.cta.button}
           </button>
         </div>
         <div className=" flex-1 flex flex-col gap-5 justify-end items-end cursor-pointer">
-          {resolveDetails().map((e, i) => (
+          {data.productImg.map((e, i) => (
             <div
               className="bg-orange-50 max-w-40 aspect-square w-full flex justify-center items-center shadow"
               key={i}
@@ -45,7 +30,7 @@ export const Hero = () => {
         </div>
       </div>
       <Image
-        src={isHub ? "/001/HeroPic.png" : "/HeroPic.png"}
+        src={data.heroImg}
         width={2000}
         height={2000}
         priority
