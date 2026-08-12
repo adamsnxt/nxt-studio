@@ -8,7 +8,7 @@ param (
 
 $source = Join-Path $PSScriptRoot "app\templates\$Template"
 $temp = Join-Path $env:TEMP "repo-$RepoName"
-
+        S
 if (-not (Test-Path $source)) {
     Write-Error "El template '$Template' no existe."
     exit 1

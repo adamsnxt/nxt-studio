@@ -14,9 +14,9 @@ type Template = {
 };
 
 export const templates: Record<string, Template> = {
-  "001": {
+  maison: {
     loader: () =>
-      import("@/app/templates/one-product-page/001/src/components/Landing"),
-    assets: "/001",
+      import("@/app/templates/one-product-page/maison/src/components/Landing"),
+    assets: "/maison",
   },
 };

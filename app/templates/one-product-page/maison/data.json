@@ -1,0 +1,46 @@
+{
+  "navbar": {
+    "logo": "/PatekLogo.png",
+    "optionsNav": [
+      { "label": "AboutUs", "path": "#" },
+      { "label": "Collection", "path": "#" },
+      { "label": "Design inspiration", "path": "#" }
+    ]
+  },
+  "hero": {
+    "title": "PATEK PHILIPPE",
+    "heroImg": "/HeroPic.png",
+    "cta": {
+      "paragraph": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, sint ea repudiandae dolorum veritatis magni suscipit.",
+      "button": "Ver más"
+    },
+    "productImg": ["/detail2.png", "/detail.png", "/detail3.png"]
+  },
+  "whatIs": {
+    "title": "DISEÑADO PARA HACERTE SENTIR BIEN",
+    "paragraph": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis, sint ea repudiandae dolorum veritatis magni suscipit."
+  },
+
+  "productDetail": {
+    "mainImg": "/detailTry2.png",
+    "texts": {
+      "headLine": "La precisión, llevada al extremo.",
+      "title": "Ingeniería que merece ser contemplada.",
+      "points": [
+        {
+          "title": "El corazón de la pieza.",
+          "text": "Un movimiento automático de alta precisión, visible a través del fondo de zafiro y acabado con el nivel de detalle propio de la alta relojería."
+        },
+        {
+          "title": "Una presencia inconfundible.",
+          "text": "La caja y el brazalete combinan superficies pulidas y satinadas para crear reflejos profundos y una presencia elegante desde cualquier ángulo."
+        },
+        {
+          "title": "Cada detalle importa.",
+          "text": "Engranajes, rubíes, tornillos y acabados trabajados a mano convergen en una pieza donde la precisión técnica se convierte en arte."
+        }
+      ]
+    },
+    "logoPic": "/PatekLogo.png"
+  }
+}

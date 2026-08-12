@@ -9,9 +9,9 @@ import Image from "next/image";
 
 const templates = [
   {
-    img: "/001/demo.png",
+    img: "/maison/demo.png",
     alt: "Pagina de un producto",
-    path: "/preview/001",
+    path: "/preview/maison",
   },
 ];
 
