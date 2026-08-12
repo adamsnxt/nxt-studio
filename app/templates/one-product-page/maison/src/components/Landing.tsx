@@ -1,10 +1,16 @@
 import { Navbar } from "./organism";
-import { Detail, Hero, WhatIs } from "./sections";
+import { Detail, Hero, WhatIs, MoreDetails } from "./sections";
 import data from "../../data.json";
+import { IconType } from "react-icons";
+import { GiPolarStar } from "react-icons/gi";
 
 interface LandingProps {
   assetBasePath?: string;
 }
+
+const icons: Record<string, IconType> = {
+  GiPolarStar,
+};
 
 const Landing = ({ assetBasePath = "" }: LandingProps) => {
   const asset = (path: string) => `${assetBasePath}/${path}`.replace("//", "/");
@@ -26,12 +32,21 @@ const Landing = ({ assetBasePath = "" }: LandingProps) => {
     logoPic: asset(data.productDetail.logoPic),
   };
 
+  const productMoreDetail: ProductMoreDetail = {
+    ...data.productMoreDetail,
+    points: data.productMoreDetail.points.map((e) => ({
+      ...e,
+      icon: icons[e.icon],
+    })),
+  };
+
   return (
     <>
       <Navbar data={navbar} />
       <Hero data={hero} />
       <WhatIs data={data.whatIs} />
       <Detail data={detail} />
+      <MoreDetails data={productMoreDetail} />
     </>
   );
 };

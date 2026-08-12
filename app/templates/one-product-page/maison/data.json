@@ -42,5 +42,27 @@
       ]
     },
     "logoPic": "/PatekLogo.png"
+  },
+
+  "productMoreDetail": {
+    "headLine": "La precisión, llevada al extremo.",
+    "title": "",
+    "points": [
+      {
+        "icon": "GiPolarStar",
+        "title": "Minimalista",
+        "text": "Diseño sobrio capaz de comunicar lujo sin ser vulgar"
+      },
+      {
+        "icon": "GiPolarStar",
+        "title": "Minimalista",
+        "text": "Diseño sobrio capaz de comunicar lujo sin ser vulgar"
+      },
+      {
+        "icon": "GiPolarStar",
+        "title": "Minimalista",
+        "text": "Diseño sobrio capaz de comunicar lujo sin ser vulgar"
+      }
+    ]
   }
 }

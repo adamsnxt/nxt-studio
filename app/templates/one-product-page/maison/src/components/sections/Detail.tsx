@@ -28,7 +28,7 @@ export const Detail = ({ data }: { data: ProductDetail }) => {
           <div>
             <p>{data.texts.headLine}</p>
 
-            <h1 className="text-5xl font-bold">{data.texts.title}</h1>
+            <h1 className="text-5xl font-bold uppercase">{data.texts.title}</h1>
           </div>
           <div className="flex flex-col gap-3">
             {data.texts.points.map((p, i) => {
