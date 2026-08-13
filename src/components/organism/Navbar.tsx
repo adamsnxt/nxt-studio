@@ -40,7 +40,7 @@ export const Navbar = () => {
     <nav
       className={`w-full sticky top-0 left-0 p-3 flex justify-end md:justify-center items-center z-50 gap-3`}
     >
-      <div className={`h-20 absolute inset-3 flex pointer-events-none`}>
+      <div className={`h-20 absolute inset-3 flex pointer-events-none gap-3`}>
         <div className="flex-1 " />
         <div className="flex-2 " ref={toWidthRef} />
       </div>
@@ -138,7 +138,7 @@ export const Navbar = () => {
                             mass: 0.6,
                           },
                         }}
-                        className="cursor-pointer whitespace-nowrap"
+                        className="cursor-pointer whitespace-nowrap text-xs md:text-base"
                       >
                         {option.label}
                       </motion.div>
