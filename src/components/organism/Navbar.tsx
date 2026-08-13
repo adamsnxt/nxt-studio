@@ -1,9 +1,10 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOnScroll } from "../../providers/ScrollProvider";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { spring } from "../../utils";
 import { usePathname } from "next/navigation";
+import { UseIsMobile } from "@/src/hooks";
 
 const options = [
   { label: "Contacto", path: "" },
@@ -15,18 +16,39 @@ export const Navbar = () => {
   const { isNotTop, isBrowserActive } = useOnScroll();
   const [hovered, setHovered] = useState<number | null>(null);
   const route = usePathname();
+  const isMobile = UseIsMobile();
+  const toWidthRef = useRef<HTMLDivElement | null>(null);
+  const [resolveTernaryMax, setResolveTernaryMax] = useState<number>(0);
 
   useEffect(() => {
-    console.log(route);
-  });
+    if (!toWidthRef.current) return;
+
+    setResolveTernaryMax(
+      isMobile
+        ? isBrowserActive
+          ? toWidthRef.current.offsetWidth
+          : 1920
+        : isNotTop
+          ? 1024
+          : 1920,
+    );
+  }, [isMobile, isBrowserActive, isNotTop]);
+
   if (route.startsWith("/preview")) return;
+
   return (
-    <nav className="w-full sticky top-0 left-0 p-3 flex justify-center items-center z-50 ">
+    <nav
+      className={`w-full sticky top-0 left-0 p-3 flex justify-end md:justify-center items-center z-50 gap-3`}
+    >
+      <div className={`h-20 absolute inset-3 flex pointer-events-none`}>
+        <div className="flex-1 " />
+        <div className="flex-2 " ref={toWidthRef} />
+      </div>
       <motion.nav
-        className="w-full h-20 bg-background/30 backdrop-blur-3xl flex justify-center items-center border border-foreground/20 rounded-4xl px-6"
+        className={`w-full h-20 backdrop-blur-3xl flex justify-center items-center border border-foreground/20 rounded-4xl px-6`}
         initial={false}
         animate={{
-          maxWidth: isNotTop ? 1024 : 1920,
+          maxWidth: resolveTernaryMax,
         }}
         transition={spring}
       >
@@ -64,7 +86,7 @@ export const Navbar = () => {
           ) : (
             <motion.div
               key="navigation"
-              className="w-full flex items-center"
+              className={`flex items-center w-full`}
               initial={{
                 opacity: 0,
                 y: -4,
@@ -82,7 +104,11 @@ export const Navbar = () => {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <motion.div layout className="w-full" transition={spring}>
+              <motion.div
+                layout
+                className="hidden md:block"
+                transition={spring}
+              >
                 LOGO
               </motion.div>
 
@@ -132,8 +158,6 @@ export const Navbar = () => {
                   );
                 })}
               </div>
-
-              <div className="w-full" />
             </motion.div>
           )}
         </AnimatePresence>

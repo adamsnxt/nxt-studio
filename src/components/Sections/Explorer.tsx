@@ -6,6 +6,7 @@ import { spring } from "../../utils";
 import Link from "next/link";
 import ReactLenis from "lenis/react";
 import Image from "next/image";
+import { UseIsMobile } from "@/src/hooks";
 
 const templates = [
   {
@@ -18,6 +19,7 @@ const templates = [
 export const Explorer = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const { setIsBrowserActive, isBrowserActive } = useOnScroll();
+  const isMobile = UseIsMobile();
 
   useEffect(() => {
     const checkSticky = () => {
@@ -42,7 +44,7 @@ export const Explorer = () => {
         <div className="w-full h-20 flex gap-3 justify-center items-center " />
       </div>
       <div className="absolute w-full h-26 top-0 left-0 flex gap-3 pt-3 px-3 ">
-        <div className="flex-1 h-full w-full font-bold flex rounded-t-4xl bg-background/30 relative border border-b-0 border-r-0 border-foreground/20 justify-center items-center">
+        <div className="flex-1 h-full w-full font-bold flex rounded-t-4xl bg-background/30 relative border border-b-0 border-r-0 border-foreground/20 justify-center items-center px-5 md:p-0">
           <div
             className="absolute w-8 h-8 -right-8 bottom-0 z-20"
             style={{
@@ -56,7 +58,11 @@ export const Explorer = () => {
               initial={false}
               animate={{
                 opacity: isBrowserActive ? 1 : 0.5,
-                fontSize: isBrowserActive ? "3.5rem" : "2.5rem",
+                fontSize: isMobile
+                  ? "1.5rem"
+                  : isBrowserActive && !isMobile
+                    ? "3.5rem"
+                    : "2.5rem",
               }}
               transition={spring}
             >
@@ -80,13 +86,13 @@ export const Explorer = () => {
       </div>
       <div className="w-full h-full bg-background/30 border border-t-0 rounded-b-4xl relative border-foreground/20 p-3 overflow-hidden">
         <ReactLenis
-          className={`w-full h-full  rounded-4xl scrollbar-none overflow-y-auto`}
+          className={`w-full h-full  rounded-2xl md:rounded-4xl scrollbar-none overflow-y-auto`}
         >
-          <div className="w-full grid grid-cols-3 gap-3">
+          <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-3">
             {templates.map((template, i) => (
               <Link
                 href={template.path}
-                className="w-full bg-background/30 border border-foreground/20 rounded-3xl flex justify-center items-center overflow-hidden"
+                className="w-full bg-background/30 border border-foreground/20 rounded-xl md:rounded-3xl flex justify-center items-center overflow-hidden"
                 key={i}
               >
                 <Image

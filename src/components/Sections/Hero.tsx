@@ -1,11 +1,11 @@
 "use client";
-
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { spring } from "../../utils";
 import { useRouter } from "next/navigation";
+import { UseIsMobile } from "@/src/hooks";
 
 const categories = [
   { label: "Deporte", path: "" },
@@ -27,6 +27,8 @@ export const Hero = () => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isHovered, setIsHovered] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const isMobile = UseIsMobile();
 
   const router = useRouter();
 
@@ -63,49 +65,73 @@ export const Hero = () => {
 
   return (
     <section className="w-full flex flex-col justify-start items-start gap-3 px-3">
-      <div className="w-full rounded-4xl flex gap-3">
-        <div className="w-full bg-background/30 border border-foreground/20 flex-1 rounded-4xl p-8 gap-3 flex flex-col">
-          <h1 className="text-3xl font-light">Categorias</h1>
+      <div className="w-full rounded-4xl flex gap-3 flex-col lg:flex-row">
+        <div className="w-full md:bg-background/30 border border-foreground/20 flex-1 rounded-4xl p-5 md:p-8 gap-3 flex flex-col overflow-hidden">
+          <h1 className="text-lg lg:text-3xl font-light ">Categorias</h1>
 
-          <div className="flex flex-col text-xl gap-3">
-            {categories.map((category) => (
-              <motion.p
-                key={category.label}
-                initial="rest"
-                whileHover="hover"
-                className="
+          <div
+            className="w-full px-3 md:p-0"
+            style={{
+              maskImage: isMobile
+                ? "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)"
+                : "",
+              WebkitMaskImage: isMobile
+                ? "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)"
+                : "",
+            }}
+            ref={containerRef}
+          >
+            <motion.div
+              className="flex lg:flex-col text-xl gap-3 w-fit md:w-auto"
+              drag="x"
+              dragConstraints={containerRef}
+            >
+              {categories.map((category) => (
+                <motion.p
+                  key={category.label}
+                  initial="rest"
+                  whileHover="hover"
+                  className="
     bg-foreground/2
-    border border-foreground/10
-    p-3
+    border border-foreground/20
+    lg:p-3
+    px-3
     rounded-2xl
     cursor-pointer
     relative
     overflow-hidden
+    shrink-0
+    md:shrink
   "
-                onClick={() => handleRedirect(category.path)}
-              >
-                <motion.span
-                  variants={{
-                    rest: {
-                      opacity: 0,
-                    },
-                    hover: {
-                      opacity: 1,
-                    },
-                  }}
-                  transition={spring}
-                  className="
+                  onClick={() => handleRedirect(category.path)}
+                >
+                  <motion.span
+                    variants={{
+                      rest: {
+                        opacity: 0,
+                      },
+                      hover: {
+                        opacity: 1,
+                      },
+                    }}
+                    transition={spring}
+                    className="
       absolute
       inset-0
       -bg-linear-90
       from-background
       to-orange-500
+      hidden
+      md:block
     "
-                />
+                  />
 
-                <span className="relative z-10">{category.label}</span>
-              </motion.p>
-            ))}
+                  <span className="relative z-10 text-sm md:text-base">
+                    {category.label}
+                  </span>
+                </motion.p>
+              ))}
+            </motion.div>
           </div>
         </div>
 
@@ -158,12 +184,20 @@ export const Hero = () => {
             </motion.div>
           </AnimatePresence>
 
-          <BannerArrow direction="left" onClick={() => changeBanner(-1)} />
+          <BannerArrow
+            direction="left"
+            onClick={() => changeBanner(-1)}
+            isMobile={isMobile}
+          />
 
-          <BannerArrow direction="right" onClick={() => changeBanner(1)} />
+          <BannerArrow
+            direction="right"
+            onClick={() => changeBanner(1)}
+            isMobile={isMobile}
+          />
         </div>
 
-        <div className="w-full bg-background/30 border border-foreground/20 flex-1 rounded-4xl p-8" />
+        <div className="w-full bg-background/30 border border-foreground/20 flex-1 rounded-4xl p-8 hidden lg:flex" />
       </div>
     </section>
   );
@@ -172,15 +206,16 @@ export const Hero = () => {
 interface BannerArrowProps {
   direction: "left" | "right";
   onClick: () => void;
+  isMobile: boolean;
 }
 
-const BannerArrow = ({ direction, onClick }: BannerArrowProps) => {
+const BannerArrow = ({ direction, onClick, isMobile }: BannerArrowProps) => {
   const isLeft = direction === "left";
 
   return (
     <div
       className={`
-        w-20 h-20
+        w-10 md:w-20 h-10 md:h-20
         bg-background
         absolute
         top-1/2
@@ -192,9 +227,9 @@ const BannerArrow = ({ direction, onClick }: BannerArrowProps) => {
     >
       <div
         className={`
-          w-10 h-10
+          w-5 md:w-10 h-5 md:h-10
           absolute
-          -top-10
+          -top-5 md:-top-10
           ${isLeft ? "left-0" : "right-0"}
           bg-background
         `}
@@ -220,8 +255,7 @@ const BannerArrow = ({ direction, onClick }: BannerArrowProps) => {
         className="
           w-15 h-15
           rounded-full
-          bg-background/30
-          border border-foreground/30
+          md:border border-foreground/30
           flex justify-center items-center
           cursor-pointer
 
@@ -229,17 +263,17 @@ const BannerArrow = ({ direction, onClick }: BannerArrowProps) => {
         "
       >
         {isLeft ? (
-          <IoIosArrowBack size={32} />
+          <IoIosArrowBack size={isMobile ? 16 : 32} />
         ) : (
-          <IoIosArrowForward size={32} />
+          <IoIosArrowForward size={isMobile ? 16 : 32} />
         )}
       </motion.button>
 
       <div
         className={`
-          w-10 h-10
+          w-5 md:w-10 h-5 md:h-10
           absolute
-          -bottom-10
+          -bottom-5 md:-bottom-10
           ${isLeft ? "left-0" : "right-0"}
           bg-background
         `}
