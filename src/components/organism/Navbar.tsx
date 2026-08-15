@@ -35,7 +35,7 @@ export const Navbar = () => {
         }
 
         if (searching) {
-          setResolveTernaryMax(1920);
+          setResolveTernaryMax(320);
           return;
         }
       }

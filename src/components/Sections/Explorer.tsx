@@ -93,13 +93,13 @@ export const Explorer = () => {
             }}
           />
 
-          <div className="w-20 h-[calc(100%-1.7rem)] rounded-t-4xl border-l border-foreground/20 absolute left-0 top-0" />
+          <div className="w-20 h-[calc(100%-1.7rem)] rounded-t-4xl border-l border-foreground/20 absolute left-0 top-0 " />
         </div>
       </div>
 
       <div className="w-full h-full bg-background/30 border border-t-0 rounded-b-4xl rounded-tr-4xl md:rounded-tr-none relative border-foreground/20 p-3 overflow-hidden">
         <ReactLenis className="w-full h-full rounded-2xl md:rounded-4xl scrollbar-none overflow-y-auto">
-          <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {templates.map((template, i) => (
               <Link
                 href={template.path}
