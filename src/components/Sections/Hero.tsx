@@ -66,7 +66,7 @@ export const Hero = () => {
   return (
     <section className="w-full flex flex-col justify-start items-start gap-3 px-3">
       <div className="w-full rounded-4xl flex gap-3 flex-col lg:flex-row">
-        <div className="w-full md:bg-background/30 border border-foreground/20 flex-1 rounded-4xl p-5 md:p-8 gap-3 flex flex-col overflow-hidden">
+        <div className="w-full md:bg-background/30 border border-foreground/20 flex-1 rounded-4xl p-5 md:p-8 gap-3 flex flex-col overflow-hidden backdrop-blur-2xl">
           <h1 className="text-lg lg:text-3xl font-light ">Categorias</h1>
 
           <div
@@ -102,6 +102,7 @@ export const Hero = () => {
     overflow-hidden
     shrink-0
     md:shrink
+    flex justify-center items-center md:block
   "
                   onClick={() => handleRedirect(category.path)}
                 >

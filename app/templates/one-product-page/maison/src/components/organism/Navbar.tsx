@@ -8,11 +8,11 @@ export const Navbar = ({ data }: { data: Navbar }) => {
         width={200}
         height={200}
         alt=""
-        className="w-10 h-10"
+        className="md:w-10 w-5 md:h-10 h-5"
       />
       <div className="flex gap-5 justify-center items-center text-black/50 flex-1">
         {data.optionsNav.map((e, i) => (
-          <div key={i} className="cursor-pointer">
+          <div key={i} className="cursor-pointer text-xs md:text-base">
             {e.label}
           </div>
         ))}

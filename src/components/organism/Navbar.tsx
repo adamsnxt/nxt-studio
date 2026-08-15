@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { spring } from "../../utils";
 import { usePathname } from "next/navigation";
 import { UseIsMobile } from "@/src/hooks";
+import Link from "next/link";
 
 const options = [
   { label: "Contacto", path: "" },
@@ -13,47 +14,88 @@ const options = [
 ];
 
 export const Navbar = () => {
-  const { isNotTop, isBrowserActive } = useOnScroll();
+  const { isNotTop, isBrowserActive, setSearching, searching } = useOnScroll();
   const [hovered, setHovered] = useState<number | null>(null);
   const route = usePathname();
   const isMobile = UseIsMobile();
   const toWidthRef = useRef<HTMLDivElement | null>(null);
   const [resolveTernaryMax, setResolveTernaryMax] = useState<number>(0);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    if (!toWidthRef.current) return;
+    const element = toWidthRef.current;
 
-    setResolveTernaryMax(
-      isMobile
-        ? isBrowserActive
-          ? toWidthRef.current.offsetWidth
-          : 1920
-        : isNotTop
-          ? 1024
-          : 1920,
-    );
-  }, [isMobile, isBrowserActive, isNotTop]);
+    if (!element) return;
+
+    const updateMaxWidth = () => {
+      if (isMobile) {
+        if (isBrowserActive) {
+          setResolveTernaryMax(element.offsetWidth);
+          return;
+        }
+
+        if (searching) {
+          setResolveTernaryMax(1920);
+          return;
+        }
+      }
+
+      if (searching) {
+        setResolveTernaryMax(1024);
+        return;
+      }
+
+      setResolveTernaryMax(isNotTop ? 1024 : 1920);
+    };
+
+    updateMaxWidth();
+
+    const observer = new ResizeObserver(updateMaxWidth);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [isMobile, isBrowserActive, isNotTop, searching]);
 
   if (route.startsWith("/preview")) return;
 
   return (
-    <nav
+    <div
       className={`w-full sticky top-0 left-0 p-3 flex justify-end md:justify-center items-center z-50 gap-3`}
     >
-      <div className={`h-20 absolute inset-3 flex pointer-events-none gap-3`}>
-        <div className="flex-1 " />
-        <div className="flex-2 " ref={toWidthRef} />
+      <div
+        className={`h-20 absolute inset-3 flex pointer-events-none gap-3 opacity-0`}
+      >
+        <div className="flex-1 h-full w-full font-bold flex rounded-t-4xl  relative border border-b-0 border-r-0 border-foreground/20 justify-center items-center px-5 md:p-0 bg-red-600">
+          <Link href="#explorer">
+            <motion.h1
+              initial={false}
+              animate={{
+                opacity: isBrowserActive ? 1 : 0.5,
+                fontSize: isMobile
+                  ? "1.5rem"
+                  : isBrowserActive && !isMobile
+                    ? "3.5rem"
+                    : "2.5rem",
+              }}
+              transition={spring}
+            >
+              Explorar
+            </motion.h1>
+          </Link>
+        </div>
+        <div className="w-full" ref={toWidthRef} />
       </div>
-      <motion.nav
-        className={`w-full h-20 backdrop-blur-3xl flex justify-center items-center border border-foreground/20 rounded-4xl px-6`}
-        initial={false}
+      <motion.div
+        className={`w-full h-20  flex justify-center items-center border border-foreground/20 rounded-4xl px-6 bg-background/30 relative overflow-hidden z-20 backdrop-blur-2xl`}
+        initial={{ opacity: 0 }}
         animate={{
+          opacity: 1,
           maxWidth: resolveTernaryMax,
         }}
         transition={spring}
       >
         <AnimatePresence mode="wait" initial={false}>
-          {isBrowserActive ? (
+          {isBrowserActive || searching ? (
             <motion.div
               key="browser"
               initial={{
@@ -81,6 +123,21 @@ export const Navbar = () => {
                 type="text"
                 className="w-full h-full border-none outline-none text-xl capitalize"
                 placeholder="Buscar..."
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  setSearch(value);
+
+                  if (value.length > 0) {
+                    setSearching(true);
+                  }
+                }}
+                onFocus={() => setSearching(true)}
+                onBlur={() => {
+                  if (search.length === 0) {
+                    setSearching(false);
+                  }
+                }}
               />
             </motion.div>
           ) : (
@@ -139,6 +196,10 @@ export const Navbar = () => {
                           },
                         }}
                         className="cursor-pointer whitespace-nowrap text-xs md:text-base"
+                        style={{
+                          color: "var(--foregorund)",
+                          mixBlendMode: "difference",
+                        }}
                       >
                         {option.label}
                       </motion.div>
@@ -161,7 +222,7 @@ export const Navbar = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.nav>
-    </nav>
+      </motion.div>{" "}
+    </div>
   );
 };

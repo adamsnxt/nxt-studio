@@ -12,7 +12,7 @@ export const Hero = ({ data }: { data: Hero }) => {
             {data.cta.button}
           </button>
         </div>
-        <div className=" flex-1 flex flex-col gap-5 justify-end items-end cursor-pointer">
+        <div className=" flex-1 flex-col gap-5 justify-end items-end cursor-pointer hidden md:flex">
           {data.productImg.map((e, i) => (
             <div
               className="bg-orange-50 max-w-40 aspect-square w-full flex justify-center items-center shadow"
@@ -35,7 +35,7 @@ export const Hero = ({ data }: { data: Hero }) => {
         height={2000}
         priority
         alt=""
-        className="absolute bottom-5 left-1/2 -translate-x-1/2 h-full object-contain max-w-3xl object-bottom"
+        className="absolute top-10 md:top-auto left-1/2 md:bottom-5 -translate-x-1/2 h-full object-contain md:max-w-3xl md:object-bottom  object-top"
       />
     </div>
   );
